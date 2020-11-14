@@ -9,7 +9,7 @@ resource "github_repository" "subscriptions" {
 
   template {
     owner = "LexisNexis-TFE"
-    repository = "tfe-prod-template"
+    repository = "tfe-workspace-template"
   }
 
 }
