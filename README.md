@@ -20,7 +20,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| azure\_subscriptions | map of subscription names to subscription ids | `map` | n/a | yes |
+| azure\_workspaces | map of workspace names to subscription information | `map` | n/a | yes |
 | github\_org | GitHub Orginisation | `string` | n/a | yes |
 | github\_token | GitHub token used to create repos | `string` | n/a | yes |
 
@@ -28,6 +28,6 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| azure\_subscriptions | Subscription Map |
+| azure\_workspaces | Subscription Map |
 
 <!--- END_TF_DOCS --->
