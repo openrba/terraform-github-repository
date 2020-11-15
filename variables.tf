@@ -10,7 +10,7 @@ variable "github_org" {
 }
 
 # Generated run.py
-variable "azure_subscriptions" {
-  description = "map of subscription names to subscription ids"
+variable "azure_workspaces" {
+  description = "map of workspace names to subscription information"
   type        = map
 }

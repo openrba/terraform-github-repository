@@ -1,6 +1,6 @@
 # Create Repos
-resource "github_repository" "subscriptions" {
-  for_each = var.azure_subscriptions
+resource "github_repository" "workspaces" {
+  for_each = var.azure_workspaces
   
   name         = "tfe-prod-${each.key}"
   description  = "Terraform Enterprise Production Workspace"
@@ -15,16 +15,16 @@ resource "github_repository" "subscriptions" {
 }
 
 # Create GitHub Teams
-resource "github_team" "subscription_read" {
-  for_each = var.azure_subscriptions
+resource "github_team" "workspace_read" {
+  for_each = var.azure_workspaces
 
   name        = "tfe-prod-${each.key}-read"
   description = "${each.key} Read Access"
   privacy     = "closed"
 }
 
-resource "github_team" "subscription_write" {
-  for_each = var.azure_subscriptions
+resource "github_team" "workspace_write" {
+  for_each = var.azure_workspaces
 
   name        = "tfe-prod-${each.key}-write"
   description = "${each.key} Write Access"
@@ -33,17 +33,17 @@ resource "github_team" "subscription_write" {
 
 # Team Permissions
 resource "github_team_repository" "team_read" {
-  for_each = var.azure_subscriptions
+  for_each = var.azure_workspaces
   
-  team_id    = github_team.subscription_read[each.key].id
-  repository = github_repository.subscriptions[each.key].name
+  team_id    = github_team.workspace_read[each.key].id
+  repository = github_repository.workspaces[each.key].name
   permission = "pull"
 }
 
 resource "github_team_repository" "team_write" {
-  for_each = var.azure_subscriptions
+  for_each = var.azure_workspaces
 
-  team_id    = github_team.subscription_write[each.key].id
-  repository = github_repository.subscriptions[each.key].name
+  team_id    = github_team.workspace_write[each.key].id
+  repository = github_repository.workspaces[each.key].name
   permission = "push"
 }
