@@ -2,7 +2,7 @@
 resource "github_repository" "workspaces" {
   for_each = var.azure_workspaces
   
-  name         = "ris-azr-group-tfe-${each.key}"
+  name         = "tfe-prod-${each.key}"
   description  = "Terraform Enterprise Production Workspace"
   visibility   = "private"
   homepage_url = "https://tfe.lnrisk.io"
