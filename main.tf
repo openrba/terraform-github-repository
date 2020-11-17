@@ -21,7 +21,6 @@ resource "github_team" "workspace_read" {
   name        = "ris-azr-group-tfe-${each.key}-read"
   description = "${each.key} Read Access"
   privacy     = "closed"
-  ldap_dn     = "ris-azr-group-tfe-${each.key}-read"
 }
 
 resource "github_team" "workspace_write" {
@@ -30,7 +29,6 @@ resource "github_team" "workspace_write" {
   name        = "ris-azr-group-tfe-${each.key}-write"
   description = "${each.key} Write Access"
   privacy     = "closed"
-  ldap_dn     = "ris-azr-group-tfe-${each.key}-write"
 }
 
 # Team Permissions
@@ -50,15 +48,21 @@ resource "github_team_repository" "team_write" {
   permission = "push"
 }
 
+# Test Group Sync
+data "github_organization_team_sync_groups" "aad_groups" {}
+
+output "test_group_sync" {
+  value       = data.github_organization_team_sync_groups.aad_groups
+}
+
 # Administration Team
 resource "github_team" "admin" {
   name        = "ris-azr-group-tfe-administrators"
   description = "Terraform Enterprise Production Administrators"
   privacy     = "secret"
-  ldap_dn     = "ris-azr-group-tfe-administrators"
 }
 
-resource "github_team_repository" "some_team_repo" {
+resource "github_team_repository" "all_repos" {
   for_each = var.azure_workspaces
 
   team_id    = github_team.admin.id
