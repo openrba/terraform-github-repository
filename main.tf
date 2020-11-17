@@ -2,7 +2,7 @@
 resource "github_repository" "workspaces" {
   for_each = var.azure_workspaces
   
-  name         = "tfe-prod-${each.key}"
+  name         = "ris-azr-group-tfe-${each.key}"
   description  = "Terraform Enterprise Production Workspace"
   visibility   = "private"
   homepage_url = "https://tfe.lnrisk.io"
@@ -18,17 +18,19 @@ resource "github_repository" "workspaces" {
 resource "github_team" "workspace_read" {
   for_each = var.azure_workspaces
 
-  name        = "tfe-prod-${each.key}-read"
+  name        = "ris-azr-group-tfe-${each.key}-read"
   description = "${each.key} Read Access"
   privacy     = "closed"
+  ldap_dn     = "ris-azr-group-tfe-${each.key}-read"
 }
 
 resource "github_team" "workspace_write" {
   for_each = var.azure_workspaces
 
-  name        = "tfe-prod-${each.key}-write"
+  name        = "ris-azr-group-tfe-${each.key}-write"
   description = "${each.key} Write Access"
   privacy     = "closed"
+  ldap_dn     = "ris-azr-group-tfe-${each.key}-write"
 }
 
 # Team Permissions
@@ -50,21 +52,10 @@ resource "github_team_repository" "team_write" {
 
 # Administration Team
 resource "github_team" "admin" {
-  name        = "tfe-prod-admins"
+  name        = "ris-azr-group-tfe-administrators"
   description = "Terraform Enterprise Production Administrators"
   privacy     = "secret"
-}
-
-resource "github_team_membership" "hiscjo01" {
-  team_id  = github_team.admin.id
-  username = "hiscjo01"
-  role     = "member"
-}
-
-resource "github_team_membership" "dutsmiller" {
-  team_id  = github_team.admin.id
-  username = "dutsmiller"
-  role     = "member"
+  ldap_dn     = "ris-azr-group-tfe-administrators"
 }
 
 resource "github_team_repository" "some_team_repo" {
