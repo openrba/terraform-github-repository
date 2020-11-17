@@ -29,5 +29,6 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | azure\_workspaces | Subscription Map |
+| test\_group\_sync | n/a |
 
 <!--- END_TF_DOCS --->
