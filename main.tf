@@ -48,13 +48,6 @@ resource "github_team_repository" "team_write" {
   permission = "push"
 }
 
-# Test Group Sync
-data "github_organization_team_sync_groups" "aad_groups" {}
-
-output "test_group_sync" {
-  value       = data.github_organization_team_sync_groups.aad_groups
-}
-
 # Administration Team
 resource "github_team" "admin" {
   name        = "ris-azr-group-tfe-administrators"
