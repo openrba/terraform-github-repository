@@ -21,7 +21,6 @@ resource "github_team" "workspace_read" {
   name        = "ris-azr-group-tfe-${each.key}-read"
   description = "${each.key} Read Access"
   privacy     = "closed"
-  ldap_dn     = "ris-azr-group-tfe-${each.key}-read"
 }
 
 resource "github_team" "workspace_write" {
@@ -30,7 +29,6 @@ resource "github_team" "workspace_write" {
   name        = "ris-azr-group-tfe-${each.key}-write"
   description = "${each.key} Write Access"
   privacy     = "closed"
-  ldap_dn     = "ris-azr-group-tfe-${each.key}-write"
 }
 
 # Team Permissions
