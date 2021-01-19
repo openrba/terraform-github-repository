@@ -1,16 +1,20 @@
-# Input Variables
-variable "github_token" {
-  description = "GitHub token used to create repos"
+# Input Variable
+variable "repository_name" {
+  description = "GitHub Respository Name"
   type        = string
 }
 
-variable "github_org" {
+variable "repository_branches" {
+  description = "GitHub Branches"
+  type        = map
+}
+
+variable "github_admin" {
+  description = "GitHub Admin Team ID"
+  type        = string
+}
+
+variable "github_org" { 
   description = "GitHub Orginisation"
   type        = string
-}
-
-# Generated run.py
-variable "azure_workspaces" {
-  description = "map of workspace names to subscription information"
-  type        = map
 }

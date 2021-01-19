@@ -1,8 +1,6 @@
 # Create Repos
-resource "github_repository" "workspaces" {
-  for_each = var.azure_workspaces
-  
-  name         = "tfe-prod-${each.key}"
+resource "github_repository" "workspace" {  
+  name         = "tfe-prod-${var.repository_name}"
   description  = "Terraform Enterprise Production Workspace"
   visibility   = "private"
   homepage_url = "https://tfe.lnrisk.io"
@@ -16,49 +14,41 @@ resource "github_repository" "workspaces" {
 
 # Create GitHub Teams
 resource "github_team" "workspace_read" {
-  for_each = var.azure_workspaces
-
-  name        = "ris-azr-group-tfe-${each.key}-read"
-  description = "${each.key} Read Access"
+  name        = "ris-azr-group-tfe-${var.repository_name}-read"
+  description = "${var.repository_name} Read Access"
   privacy     = "closed"
 }
 
 resource "github_team" "workspace_write" {
-  for_each = var.azure_workspaces
-
-  name        = "ris-azr-group-tfe-${each.key}-write"
-  description = "${each.key} Write Access"
+  name        = "ris-azr-group-tfe-${var.repository_name}-write"
+  description = "${var.repository_name} Write Access"
   privacy     = "closed"
 }
 
 # Team Permissions
-resource "github_team_repository" "team_read" {
-  for_each = var.azure_workspaces
-  
-  team_id    = github_team.workspace_read[each.key].id
-  repository = github_repository.workspaces[each.key].name
+resource "github_team_repository" "team_read" { 
+  team_id    = github_team.workspace_read.id
+  repository = github_repository.workspace.name
   permission = "pull"
 }
 
 resource "github_team_repository" "team_write" {
-  for_each = var.azure_workspaces
-
-  team_id    = github_team.workspace_write[each.key].id
-  repository = github_repository.workspaces[each.key].name
+  team_id    = github_team.workspace_write.id
+  repository = github_repository.workspace.name
   permission = "push"
 }
 
-# Administration Team
-resource "github_team" "admin" {
-  name        = "ris-azr-group-tfe-administrators"
-  description = "Terraform Enterprise Production Administrators"
-  privacy     = "secret"
+# Branches
+resource "github_branch" "development" {
+  for_each = var.repository_branches
+
+  repository = github_repository.workspace.name
+  branch     = each.key
 }
 
+# Administration Team
 resource "github_team_repository" "all_repos" {
-  for_each = var.azure_workspaces
-
-  team_id    = github_team.admin.id
-  repository = github_repository.workspaces[each.key].name
+  team_id    = var.github_admin
+  repository = github_repository.workspace.name
   permission = "admin"
 }
