@@ -14,19 +14,19 @@ resource "github_repository" "workspace" {
 
 # Create GitHub Teams
 resource "github_team" "workspace_read" {
-  name        = "ris-azr-group-tfe-${var.repository_name}-read"
+  name        = "ris-azr-group-github-${var.repository_name}-read"
   description = "${var.repository_name} Read Access"
   privacy     = "closed"
 }
 
 resource "github_team" "workspace_write" {
-  name        = "ris-azr-group-tfe-${var.repository_name}-write"
+  name        = "ris-azr-group-github-${var.repository_name}-write"
   description = "${var.repository_name} Write Access"
   privacy     = "closed"
 }
 
 resource "github_team" "approvers" {
-  name        = "ris-azr-group-tfe-${var.repository_name}-approvers"
+  name        = "ris-azr-group-github-${var.repository_name}-approvers"
   description = "${var.repository_name} Merge Request Approvers"
   privacy     = "closed"
 }
