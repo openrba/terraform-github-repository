@@ -9,6 +9,11 @@ variable "repository_branches" {
   type        = map
 }
 
+variable "repository_visibility" {
+  description = "GitHub Repository Visibility"
+  type        = string
+}
+
 variable "github_admin" {
   description = "GitHub Admin Team ID"
   type        = string

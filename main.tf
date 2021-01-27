@@ -2,7 +2,7 @@
 resource "github_repository" "workspace" {  
   name         = "tfe-prod-${var.repository_name}"
   description  = "Terraform Enterprise Production Workspace"
-  visibility   = "private"
+  visibility   = var.repository_visibility
   homepage_url = "https://tfe.lnrisk.io"
 
   template {
