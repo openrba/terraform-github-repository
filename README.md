@@ -24,6 +24,7 @@ No requirements.
 | github\_org | GitHub Orginisation | `string` | n/a | yes |
 | repository\_branches | GitHub Branches | `map` | n/a | yes |
 | repository\_name | GitHub Respository Name | `string` | n/a | yes |
+| repository\_visibility | GitHub Repository Visibility | `string` | n/a | yes |
 
 ## Outputs
 
