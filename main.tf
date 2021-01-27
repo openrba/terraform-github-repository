@@ -45,7 +45,7 @@ resource "github_team_repository" "team_write" {
 }
 
 # Branches
-resource "github_branch" "development" {
+resource "github_branch" "branch" {
   for_each = var.repository_branches
 
   repository = github_repository.workspace.name
