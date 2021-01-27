@@ -53,7 +53,7 @@ resource "github_branch" "branch" {
 }
 
 resource "github_branch_protection_v3" "protection" {
-  for_each = var.repository_branches
+  for_each = toset([ for name, branch in var.repository_branches: name if branch.protected == true ])
 
   repository     = github_repository.workspace.name
   branch         = each.key
