@@ -20,9 +20,11 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| azure\_workspaces | map of workspace names to subscription information | `map` | n/a | yes |
+| github\_admin | GitHub Admin Team ID | `string` | n/a | yes |
 | github\_org | GitHub Orginisation | `string` | n/a | yes |
-| github\_token | GitHub token used to create repos | `string` | n/a | yes |
+| repository\_branches | GitHub Branches | `map` | n/a | yes |
+| repository\_name | GitHub Respository Name | `string` | n/a | yes |
+| repository\_visibility | GitHub Repository Visibility | `string` | n/a | yes |
 
 ## Outputs
 

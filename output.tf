@@ -1,12 +1,12 @@
 output "azure_workspaces" {
   description = "Subscription Map"
   value = {
-    for workspace in keys(var.azure_workspaces):
+    for workspace in keys(var.repository_branches):
         workspace => {
-            tenant_id         = var.azure_workspaces[workspace].tenant_id
-            subscription_id   = var.azure_workspaces[workspace].subscription_id
+            tenant_id         = var.repository_branches[workspace].tenant_id
+            subscription_id   = var.repository_branches[workspace].subscription_id
             github_org        = var.github_org
-            github_identifier = github_repository.workspaces[workspace].full_name
+            github_identifier = github_repository.workspace.full_name
         }
   }
 }

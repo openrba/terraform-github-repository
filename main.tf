@@ -1,10 +1,8 @@
 # Create Repos
-resource "github_repository" "workspaces" {
-  for_each = var.azure_workspaces
-  
-  name         = "tfe-prod-${each.key}"
+resource "github_repository" "workspace" {  
+  name         = "tfe-prod-${var.repository_name}"
   description  = "Terraform Enterprise Production Workspace"
-  visibility   = "private"
+  visibility   = var.repository_visibility
   homepage_url = "https://tfe.lnrisk.io"
 
   template {
@@ -16,49 +14,65 @@ resource "github_repository" "workspaces" {
 
 # Create GitHub Teams
 resource "github_team" "workspace_read" {
-  for_each = var.azure_workspaces
-
-  name        = "ris-azr-group-tfe-${each.key}-read"
-  description = "${each.key} Read Access"
+  name        = "ris-azr-group-tfe-${var.repository_name}-read"
+  description = "${var.repository_name} Read Access"
   privacy     = "closed"
 }
 
 resource "github_team" "workspace_write" {
-  for_each = var.azure_workspaces
+  name        = "ris-azr-group-tfe-${var.repository_name}-write"
+  description = "${var.repository_name} Write Access"
+  privacy     = "closed"
+}
 
-  name        = "ris-azr-group-tfe-${each.key}-write"
-  description = "${each.key} Write Access"
+resource "github_team" "approvers" {
+  name        = "ris-azr-group-tfe-${var.repository_name}-approvers"
+  description = "${var.repository_name} Merge Request Approvers"
   privacy     = "closed"
 }
 
 # Team Permissions
-resource "github_team_repository" "team_read" {
-  for_each = var.azure_workspaces
-  
-  team_id    = github_team.workspace_read[each.key].id
-  repository = github_repository.workspaces[each.key].name
+resource "github_team_repository" "team_read" { 
+  team_id    = github_team.workspace_read.id
+  repository = github_repository.workspace.name
   permission = "pull"
 }
 
 resource "github_team_repository" "team_write" {
-  for_each = var.azure_workspaces
-
-  team_id    = github_team.workspace_write[each.key].id
-  repository = github_repository.workspaces[each.key].name
+  team_id    = github_team.workspace_write.id
+  repository = github_repository.workspace.name
   permission = "push"
 }
 
-# Administration Team
-resource "github_team" "admin" {
-  name        = "ris-azr-group-tfe-administrators"
-  description = "Terraform Enterprise Production Administrators"
-  privacy     = "secret"
+# Branches
+resource "github_branch" "development" {
+  for_each = var.repository_branches
+
+  repository = github_repository.workspace.name
+  branch     = each.key
 }
 
-resource "github_team_repository" "all_repos" {
-  for_each = var.azure_workspaces
+resource "github_branch_protection_v3" "protection" {
+  for_each = var.repository_branches
 
-  team_id    = github_team.admin.id
-  repository = github_repository.workspaces[each.key].name
+  repository     = github_repository.workspace.name
+  branch         = each.key
+  enforce_admins = true
+
+  required_pull_request_reviews {
+    dismiss_stale_reviews           = true
+    dismissal_teams                 = [github_team.approvers]
+    required_approving_review_count = 2
+  }
+
+  restrictions {
+    teams = [github_team.approvers]
+  }
+}
+
+# Administration Team
+resource "github_team_repository" "all_repos" {
+  team_id    = var.github_admin
+  repository = github_repository.workspace.name
   permission = "admin"
 }
