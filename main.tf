@@ -25,6 +25,12 @@ resource "github_team" "workspace_write" {
   privacy     = "closed"
 }
 
+resource "github_team" "approvers" {
+  name        = "ris-azr-group-tfe-${var.repository_name}-approvers"
+  description = "${var.repository_name} Merge Request Approvers"
+  privacy     = "closed"
+}
+
 # Team Permissions
 resource "github_team_repository" "team_read" { 
   team_id    = github_team.workspace_read.id
@@ -44,6 +50,24 @@ resource "github_branch" "development" {
 
   repository = github_repository.workspace.name
   branch     = each.key
+}
+
+resource " github_branch_protection_v3" "protection" {
+  for_each = var.repository_branches
+
+  repository     = github_repository.workspace.name
+  branch         = each.key
+  enforce_admins = true
+
+  required_pull_request_reviews {
+    dismiss_stale_reviews           = true
+    dismissal_teams                 = [github_team.approvers]
+    required_approving_review_count = 2
+  }
+
+  restrictions {
+    teams = [github_team.approvers]
+  }
 }
 
 # Administration Team
