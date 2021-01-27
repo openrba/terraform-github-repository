@@ -52,7 +52,7 @@ resource "github_branch" "development" {
   branch     = each.key
 }
 
-resource " github_branch_protection_v3" "protection" {
+resource "github_branch_protection_v3" "protection" {
   for_each = var.repository_branches
 
   repository     = github_repository.workspace.name
