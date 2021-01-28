@@ -8,7 +8,7 @@ output "azure_workspaces" {
             cloud_name               = var.repository_branches[workspace].cloud_name
             github_org               = var.github_org
             github_identifier        = github_repository.workspace.full_name
-            additional_subscriptions = var.repository_branches[workspace].azure_workspaces
+            additional_subscriptions = var.repository_branches[workspace].additional_subscriptions
         }
   }
 }
