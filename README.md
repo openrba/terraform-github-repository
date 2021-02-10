@@ -20,10 +20,14 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| github\_admin | GitHub Admin Team ID | `string` | n/a | yes |
+| github\_admin\_team | GitHub Admin Team ID | `string` | n/a | yes |
+| github\_global\_team | GitHub Global Team ID | `string` | n/a | yes |
 | github\_org | GitHub Orginisation | `string` | n/a | yes |
 | repository\_branches | GitHub Branches | `map` | n/a | yes |
+| repository\_description | The description tag for each repository | `string` | `"Terraform Enterprise Production Workspace"` | no |
+| repository\_homepage | Homepage URL for the repository | `string` | `"https://tfe.lnrisk.io"` | no |
 | repository\_name | GitHub Respository Name | `string` | n/a | yes |
+| repository\_prefix | GitHub Repostiroy name prefix | `string` | `"tfe-prod"` | no |
 | repository\_visibility | GitHub Repository Visibility | `string` | n/a | yes |
 
 ## Outputs
