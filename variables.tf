@@ -1,6 +1,18 @@
 # Input Variable
+variable "repository_prefix" {
+  description = "GitHub Repostiroy name prefix"
+  default     = "tfe-prod"
+  type        = string
+}
+
 variable "repository_name" {
   description = "GitHub Respository Name"
+  type        = string
+}
+
+variable "repository_description" {
+  description = "The description tag for each repository"
+  default     = "Terraform Enterprise Production Workspace"
   type        = string
 }
 
@@ -14,8 +26,19 @@ variable "repository_visibility" {
   type        = string
 }
 
-variable "github_admin" {
+variable "repository_homepage" {
+  description = "Homepage URL for the repository"
+  default     = "https://tfe.lnrisk.io"
+  type        = string
+}
+
+variable "github_admin_team" {
   description = "GitHub Admin Team ID"
+  type        = string
+}
+
+variable "github_global_team" {
+  description = "GitHub Global Team ID"
   type        = string
 }
 

@@ -1,9 +1,9 @@
 # Create Repos
 resource "github_repository" "workspace" {  
-  name         = "tfe-prod-${var.repository_name}"
-  description  = "Terraform Enterprise Production Workspace"
+  name         = "${var.repository_prefix}-${var.repository_name}"
+  description  = var.repository_description
   visibility   = var.repository_visibility
-  homepage_url = "https://tfe.lnrisk.io"
+  homepage_url = var.repository_homepage
 
   template {
     owner = "LexisNexis-TFE"
@@ -72,7 +72,16 @@ resource "github_branch_protection_v3" "protection" {
 
 # Administration Team
 resource "github_team_repository" "all_repos" {
-  team_id    = var.github_admin
+  team_id    = var.github_admin_team
   repository = github_repository.workspace.name
   permission = "admin"
+}
+
+# Global Team
+resource "github_team_repository" "global" { 
+  count = var.repository_visibility == "internal" ? 1 : 0
+
+  team_id    = var.github_global_team
+  repository = github_repository.workspace.name
+  permission = "triage"
 }
