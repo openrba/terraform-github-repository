@@ -44,6 +44,12 @@ resource "github_team_repository" "team_write" {
   permission = "push"
 }
 
+resource "github_team_repository" "team_approvers" { 
+  team_id    = github_team.approvers.id
+  repository = github_repository.workspace.name
+  permission = "triage"
+}
+
 # Branches
 resource "github_branch" "branch" {
   for_each = var.repository_branches
