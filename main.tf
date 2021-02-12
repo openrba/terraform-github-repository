@@ -47,7 +47,7 @@ resource "github_team_repository" "team_write" {
 resource "github_team_repository" "team_approvers" { 
   team_id    = github_team.approvers.id
   repository = github_repository.workspace.name
-  permission = "triage"
+  permission = "push"
 }
 
 # Branches
@@ -67,12 +67,12 @@ resource "github_branch_protection_v3" "protection" {
 
   required_pull_request_reviews {
     dismiss_stale_reviews           = true
-    dismissal_teams                 = [github_team.approvers.id]
+    dismissal_teams                 = [github_team.approvers.slug]
     required_approving_review_count = 1
   }
 
   restrictions {
-    teams = [github_team.approvers.id]
+    teams = [github_team.approvers.slug]
   }
 }
 
