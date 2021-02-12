@@ -83,5 +83,5 @@ resource "github_team_repository" "global" {
 
   team_id    = var.github_global_team
   repository = github_repository.workspace.name
-  permission = "triage"
+  permission = "push"
 }
