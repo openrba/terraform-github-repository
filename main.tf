@@ -71,7 +71,7 @@ resource "github_branch_protection" "protection" {
     required_approving_review_count = 1
   }
 
-  push_restrictions = [github_team.approvers..node_id]
+  push_restrictions = [github_team.approvers.node_id]
 }
 
 # Administration Team
