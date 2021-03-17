@@ -58,11 +58,11 @@ resource "github_branch" "branch" {
   branch     = each.key
 }
 
-resource "github_branch_protection_v3" "protection" {
+resource "github_branch_protection" "protection" {
   for_each = toset([ for name, branch in var.repository_branches: name if branch.protected == "true" ])
 
-  repository     = github_repository.workspace.name
-  branch         = each.key
+  repository_id  = github_repository.workspace.id
+  pattern        = each.key
   enforce_admins = true
 
   required_pull_request_reviews {
@@ -71,9 +71,7 @@ resource "github_branch_protection_v3" "protection" {
     required_approving_review_count = 1
   }
 
-  restrictions {
-    teams = [github_team.approvers.slug]
-  }
+  push_restrictions = [github_team.approvers.slug]
 }
 
 # Administration Team
