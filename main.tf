@@ -67,7 +67,7 @@ resource "github_branch_protection" "protection" {
 
   required_pull_request_reviews {
     dismiss_stale_reviews           = true
-    dismissal_teams                 = [github_team.approvers.slug]
+    dismissal_restrictions          = [github_team.approvers.slug]
     required_approving_review_count = 1
   }
 
