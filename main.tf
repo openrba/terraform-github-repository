@@ -61,7 +61,7 @@ resource "github_branch" "branch" {
 resource "github_branch_protection" "protection" {
   for_each = toset([ for name, branch in var.repository_branches: name if branch.protected == "true" ])
 
-  repository_id  = github_repository.workspace.id
+  repository_id  = github_repository.workspace.node_id
   pattern        = each.key
   enforce_admins = true
 
