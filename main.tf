@@ -64,6 +64,9 @@ resource "github_branch_protection" "protection" {
   repository_id  = github_repository.workspace.node_id
   pattern        = each.key
   enforce_admins = true
+
+  push_restrictions = [github_team.approvers.node_id]
+
 }
 
 # Administration Team
