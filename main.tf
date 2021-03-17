@@ -64,14 +64,6 @@ resource "github_branch_protection" "protection" {
   repository_id  = github_repository.workspace.node_id
   pattern        = each.key
   enforce_admins = true
-
-  required_pull_request_reviews {
-    dismiss_stale_reviews           = true
-    dismissal_restrictions          = [github_team.approvers.node_id]
-    required_approving_review_count = 1
-  }
-
-  push_restrictions = [github_team.approvers.node_id]
 }
 
 # Administration Team
