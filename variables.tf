@@ -18,7 +18,7 @@ variable "repository_description" {
 
 variable "repository_branches" {
   description = "GitHub Branches"
-  type        = map
+  type        = map(any)
 }
 
 variable "repository_visibility" {
@@ -42,7 +42,13 @@ variable "github_global_team" {
   type        = string
 }
 
-variable "github_org" { 
+variable "github_org" {
   description = "GitHub Orginisation"
   type        = string
+}
+
+variable "github_team_prefix" {
+  description = "GitHub team naming prefix"
+  type        = string
+  default     = "ris-azr-group-github"
 }
