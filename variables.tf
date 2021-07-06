@@ -45,6 +45,7 @@ variable "github_global_team" {
 variable "github_support_team" {
   description = "GitHub Support Team ID"
   type        = string
+  default     = null
 }
 
 variable "github_org" {
