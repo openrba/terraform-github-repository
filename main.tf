@@ -83,8 +83,6 @@ resource "github_team_repository" "all_repos" {
 
 # Support Team
 resource "github_team_repository" "support_reader" {
-  count = var.github_support_team == null ? 0 : 1
-
   team_id    = var.github_support_team
   repository = github_repository.workspace.name
   permission = "pull"
