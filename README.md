@@ -23,6 +23,7 @@ No requirements.
 | github\_admin\_team | GitHub Admin Team ID | `string` | n/a | yes |
 | github\_global\_team | GitHub Global Team ID | `string` | n/a | yes |
 | github\_org | GitHub Orginisation | `string` | n/a | yes |
+| github\_support\_team | GitHub Support Team ID | `string` | `null` | no |
 | github\_team\_prefix | GitHub team naming prefix | `string` | `"ris-azr-group-github"` | no |
 | repository\_branches | GitHub Branches | `map(any)` | n/a | yes |
 | repository\_description | The description tag for each repository | `string` | `"Terraform Enterprise Production Workspace"` | no |
