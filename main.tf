@@ -81,6 +81,15 @@ resource "github_team_repository" "all_repos" {
   permission = "admin"
 }
 
+# Support Team
+resource "github_team_repository" "support_reader" {
+  count = var.github_support_team != null ? 1 : 0
+
+  team_id    = var.github_support_team
+  repository = github_repository.workspace.name
+  permission = "pull"
+}
+
 # Global Team
 resource "github_team_repository" "global" {
   count = var.repository_visibility == "internal" ? 1 : 0
